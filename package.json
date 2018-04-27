@@ -1,0 +1,23 @@
+{
+  "name": "cse_ru_evening_courses",
+  "version": "1.0.0",
+  "description": "Rajshahi University evening courses a node.js RESTful API project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "cse_ru_evening_courses"
+  },
+  "keywords": [
+    "nodejs",
+    "restful",
+    "api"
+  ],
+  "author": "Rana53",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
