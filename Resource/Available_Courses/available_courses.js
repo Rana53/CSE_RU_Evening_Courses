@@ -8,5 +8,8 @@ module.exports = router;
      });
  });
 
-
-
+router.post('/',(req,res,next) => {
+    res.status(200).json({
+        message : 'test post request fro available_courses endpoint'
+    });
+});
