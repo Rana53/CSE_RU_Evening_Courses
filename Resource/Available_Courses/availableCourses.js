@@ -27,7 +27,7 @@ router.get("/", (req,res,next) => {
                     courseOfferingDept: doc.courseOfferingDept,
                     request: {
                         type: 'GET',
-                        url: 'localhost:3000//EveningCourses/AvailableCourses/' + doc._id
+                        url: 'http://localhost:3000/EveningCourses/AvailableCourses/' + doc._id
                     }
                 }
             })
@@ -41,7 +41,7 @@ router.get("/", (req,res,next) => {
     });
  });
 router.get("/:courseId",(req,res,next) =>{
-    const id = req.param.courseId;
+    const id = req.params.courseId;
     AvailableCourses.findById(id)
     .exec()
     .then(doc =>{
@@ -77,7 +77,7 @@ router.post("/",(req,res,next) => {
             },
             request: {
                 type: 'POST',
-                url: 'localhost:3000//EveningCourses/AvailableCourses/'+ result._id
+                url: 'http://localhost:3000/EveningCourses/AvailableCourses/'+ result._id
             }
         });
     })
@@ -105,7 +105,7 @@ router.patch("/:courseId",(req,res,next) => {
             updateCourse: result,
             request: {
                 type: 'POST',
-                url: 'localhost:3000//EveningCourses/AvailableCourses/'+id
+                url: 'http://localhost:3000/EveningCourses/AvailableCourses/'+id
             }
         });
     })
