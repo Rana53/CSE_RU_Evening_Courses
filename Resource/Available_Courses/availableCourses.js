@@ -20,20 +20,25 @@ router.get("/", (req,res,next) => {
     .then(docs =>{
         res.status(200).json({
             count: docs.length,
-            availableCourses: docs.map(doc=>{
+            availableCourses: docs.map(doc =>{
                 return{
                     _id: doc._id,
-                    courseName: docs.courseName,
-                    courseOfferingDept: docs.courseOfferingDept,
+                    courseName: doc.courseName,
+                    courseOfferingDept: doc.courseOfferingDept,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/Available_Courses' + docs._id
+                        url: 'http://localhost:3000/Available_Courses' + doc._id
                     }
                 }
             })
         });
     })
-    .catch();
+    .catch(err =>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
  });
 
 router.post("/",(req,res,next) => {
@@ -74,8 +79,21 @@ router.patch('/',(req,res,next) => {
     });
 });
 
-router.delete('/',(req,res,next) => {
-    res.status(200).json({
-        message : 'test delete request for available_courses endpoint'
+router.delete("/:courseId",(req,res,next) => {
+    const id = req.param.courseId;
+    AvailableCourses.remove({_id: id})
+    .exec()
+    .then(result =>{
+        res.status(200).json({
+            type: 'DELETE',
+            result: result
+        });
+    })
+    .catch(err =>{
+        res.status(500).json({
+            type: 'DELETE',
+            error: err
+        });
     });
+    
 });
