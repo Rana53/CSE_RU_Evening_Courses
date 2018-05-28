@@ -27,7 +27,7 @@ router.get("/", (req,res,next) => {
                     courseOfferingDept: doc.courseOfferingDept,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/Available_Courses' + doc._id
+                        url: 'http://localhost:3000/Available_Courses/' + doc._id
                     }
                 }
             })
@@ -60,7 +60,7 @@ router.post("/",(req,res,next) => {
             },
             request: {
                 type: 'POST',
-                url: 'http://localhost:3000/Available_Courses'
+                url: 'http://localhost:3000/Available_Courses/'+ result._id
             }
         });
     })
@@ -73,9 +73,30 @@ router.post("/",(req,res,next) => {
     
 });
 
-router.patch('/',(req,res,next) => {
-    res.status(200).json({
-        message : 'test update request for available_courses endpoint'
+router.patch("/:courseId",(req,res,next) => {
+    const id = req.params.courseId;
+    const updateOps = { };
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+    AvailableCourses.update({_id: id}, {$set:updateOps})
+    .exec()
+    .then(result =>{
+        console.log(result);
+        res.status(500).json({
+            message: 'PATCH or UPDATE request',
+            updateCourse: result,
+            request: {
+                type: 'POST',
+                url: 'http://localhost:3000/Available_Courses/'+id
+            }
+        });
+    })
+    .catch(err =>{
+        res.status(500).json({
+            type: 'PATCH',
+            error: err
+        });
     });
 });
 
@@ -86,6 +107,7 @@ router.delete("/:courseId",(req,res,next) => {
     .then(result =>{
         res.status(200).json({
             type: 'DELETE',
+            comment: 'successfullly deleted',
             result: result
         });
     })
