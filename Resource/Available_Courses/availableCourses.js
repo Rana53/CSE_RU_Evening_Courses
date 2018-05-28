@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const AvailableCourses = require('../Available_Courses/availableCoursesSchema');
 
 module.exports = router;
-
 mongoose.connect('mongodb://dbuser:dbpassword@ds137720.mlab.com:37720/se_ru_evening_courses',err =>{
            // in the database link unfortunately cse repace with se cse_ru_evening_courses-> se_ru_evening_course
     if(err){
@@ -21,10 +20,10 @@ mongoose.connect('mongodb://dbuser:dbpassword@ds137720.mlab.com:37720/se_ru_even
      });
  });
 
-router.post('/',(req,res,next) => {
+router.post("/",(req,res,next) => {
     const availableCourses = new AvailableCourses({
         _id: new mongoose.Types.ObjectId,
-        courseName: req.body.courseName,
+        courseName: req.body.courseName, 
         courseOfferingDept: req.body.courseOfferingDept
     });
     availableCourses
