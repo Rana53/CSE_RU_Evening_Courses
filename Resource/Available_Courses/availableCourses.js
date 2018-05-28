@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const mongoose = require('mongoose');
+const router = express.Router();
 const AvailableCourses = require('../Available_Courses/availableCoursesSchema');
 
 module.exports = router;
@@ -14,7 +14,7 @@ mongoose.connect('mongodb://dbuser:dbpassword@ds137720.mlab.com:37720/se_ru_even
     }
 }); 
 
- router.get('/',(req,res,next) => {
+router.get('/',(req,res,next) => {
      res.status(200).json({
          message : 'Test get request for available_courses end point'
      });
@@ -49,9 +49,7 @@ router.post("/",(req,res,next) => {
             error: err
         });
     });
-    res.status(200).json({
-        message : 'test post request fro available_courses endpoint'
-    });
+    
 });
 
 router.patch('/',(req,res,next) => {
