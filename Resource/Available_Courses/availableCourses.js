@@ -14,10 +14,26 @@ mongoose.connect('mongodb://dbuser:dbpassword@ds137720.mlab.com:37720/se_ru_even
     }
 }); 
 
-router.get('/',(req,res,next) => {
-     res.status(200).json({
-         message : 'Test get request for available_courses end point'
-     });
+router.get("/", (req,res,next) => {
+    AvailableCourses.find()
+    .exec()
+    .then(docs =>{
+        res.status(200).json({
+            count: docs.length,
+            availableCourses: docs.map(doc=>{
+                return{
+                    _id: doc._id,
+                    courseName: docs.courseName,
+                    courseOfferingDept: docs.courseOfferingDept,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/Available_Courses' + docs._id
+                    }
+                }
+            })
+        });
+    })
+    .catch();
  });
 
 router.post("/",(req,res,next) => {
